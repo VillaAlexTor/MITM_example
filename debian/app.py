@@ -60,6 +60,14 @@ def init_db():
                 periodo    TEXT,
                 FOREIGN KEY(usuario_id) REFERENCES usuarios(id)
             );
+            CREATE TABLE IF NOT EXISTS movimientos (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                usuario_id INTEGER,
+                descripcion TEXT,
+                monto REAL,
+                fecha TEXT,
+                FOREIGN KEY(usuario_id) REFERENCES usuarios(id)
+            );
         """)
         # Usuarios de demo con contraseñas reales hasheadas
         usuarios_demo = [
