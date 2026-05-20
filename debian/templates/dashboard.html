@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - S.S.A.</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fff; color: #333; }
+        .navbar {
+            background-color: #1b496e; color: #fff;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; height: 50px; font-size: 13px;
+        }
+        .nav-left { display: flex; align-items: center; }
+        .nav-brand { font-size: 18px; font-weight: 700; margin-right: 25px; letter-spacing: 0.5px; color: #fff; }
+        .nav-links { display: flex; align-items: center; }
+        .nav-item {
+            color: #fff; text-decoration: none;
+            padding: 0 15px; display: flex; align-items: center;
+            cursor: pointer; height: 50px;
+        }
+        .nav-item i { margin-left: 5px; font-size: 10px; }
+        .nav-item:hover { background: rgba(255,255,255,0.08); }
+        .nav-right { display: flex; align-items: center; }
+        .striped-banner {
+            height: 35px;
+            background: repeating-linear-gradient(-45deg,#f2f2f2,#f2f2f2 4px,#ebebeb 4px,#ebebeb 8px);
+            border-bottom: 1px solid #dcdcdc;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .main-container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        .alert-info-box {
+            background-color: #e4f0f7; border-radius: 4px;
+            padding: 20px 25px; margin-bottom: 25px; color: #557993;
+        }
+        .alert-info-box h2 { font-size: 22px; color: #386f91; margin-bottom: 8px; font-weight: 600; }
+        .alert-info-box p { font-size: 14px; line-height: 1.5; color: #557993; }
+        .alert-info-box p strong { font-weight: 700; color: #386f91; }
+        .table-responsive { width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th {
+            background-color: #e2f0d9; color: #2c4c2c;
+            padding: 12px 15px; text-align: left;
+            font-weight: 700; border-bottom: 2px solid #fff;
+        }
+        td { padding: 12px 15px; border-bottom: 1px solid #eee; vertical-align: middle; color: #333; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #fafafa; }
+        .btn-action {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 6px 12px; border: none; border-radius: 3px;
+            color: white; font-size: 12px; cursor: pointer; margin-right: 5px;
+        }
+        .btn-action i { margin-right: 5px; font-size: 11px; }
+        .btn-ingresar  { background-color: #724213; }
+        .btn-ingresar:hover  { background-color: #5a330e; }
+        .btn-horarios  { background-color: #f6b552; }
+        .btn-horarios:hover  { background-color: #e5a03d; }
+        .btn-obtener   { background-color: #7ab929; }
+        .btn-obtener:hover   { background-color: #649a21; }
+        .actions-cell  { white-space: nowrap; }
+        /* Dropdown */
+        .user-dropdown-container { position: relative; }
+        .dropdown-menu {
+            display: none; position: absolute; top: 50px; right: 0;
+            background-color: #fff; min-width: 200px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            border: 1px solid #cdcdcd; border-top: none; z-index: 100;
+        }
+        .dropdown-menu.show { display: block; }
+        .dropdown-header {
+            background-color: #f5f5f5; padding: 12px 15px;
+            font-size: 15px; color: #333; border-bottom: 1px solid #eaeaea;
+            display: flex; align-items: center;
+        }
+        .dropdown-header i { margin-right: 8px; }
+        .dropdown-item {
+            padding: 12px 15px; text-decoration: none;
+            display: flex; align-items: center;
+            color: #333; font-size: 15px; transition: background .2s;
+        }
+        .dropdown-item:hover { background-color: #f2f2f2; }
+        .dropdown-item i { margin-right: 8px; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-left">
+        <div class="nav-brand">S.S.A.</div>
+        <div class="nav-links">
+            <a class="nav-item">Mis Documentos <i class="fa fa-caret-down"></i></a>
+            <a class="nav-item">Administración Personal <i class="fa fa-caret-down"></i></a>
+            <a class="nav-item">Inscripciones <i class="fa fa-caret-down"></i></a>
+            <a class="nav-item">Seguridad <i class="fa fa-caret-down"></i></a>
+        </div>
+    </div>
+    <div class="nav-right user-dropdown-container">
+        <a class="nav-item" onclick="toggleDropdown()" style="cursor:pointer">
+            <i class="fa fa-user" style="margin-right:6px;font-size:12px"></i>
+            {{ user['nombre']|upper }}
+            <i class="fa fa-caret-down" style="margin-left:6px"></i>
+        </a>
+        <div id="profileDropdown" class="dropdown-menu">
+            <div class="dropdown-header">
+                <i class="fa fa-user"></i> ESTUDIANTE
+            </div>
+            <a href="/logout" class="dropdown-item">
+                <i class="fa fa-sign-out-alt"></i> Salir
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="striped-banner"></div>
+
+<div class="main-container">
+    <div class="alert-info-box">
+        <h2>Administrar Mis Inscripciones</h2>
+        <p>Gestiona <strong>inscripciones</strong> durante su <strong>formación académica</strong> a partir de la implementación del Sistema de Seguimiento Académico en su Carrera, para <strong>ver detalles de su inscripción</strong> presione sobre un registro de la lista desplegada.</p>
+    </div>
+
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th width="5%">Nro.</th>
+                    <th width="20%">Nombre</th>
+                    <th width="10%">Gestion</th>
+                    <th width="20%">Periodo</th>
+                    <th width="45%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Filas fijas del SSA real -->
+                <tr>
+                    <td>1</td><td>PRIMERO 2026</td><td>2026</td><td>PRIMERO</td>
+                    <td class="actions-cell">
+                        <button class="btn-action btn-ingresar"><i class="fa fa-folder-open"></i> Ingresar</button>
+                        <button class="btn-action btn-horarios"><i class="fa fa-file-alt"></i> Horarios</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td><td>EX. MESA 2025</td><td>2025</td><td>EX. MESA</td>
+                    <td class="actions-cell">
+                        <button class="btn-action btn-ingresar"><i class="fa fa-folder-open"></i> Ingresar</button>
+                        <button class="btn-action btn-horarios"><i class="fa fa-file-alt"></i> Horarios</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td><td>VERANO 2025</td><td>2025</td><td>VERANO</td>
+                    <td class="actions-cell">
+                        <button class="btn-action btn-ingresar"><i class="fa fa-folder-open"></i> Ingresar</button>
+                        <button class="btn-action btn-obtener"><i class="fa fa-cloud-download-alt"></i> Obtener CP</button>
+                        <button class="btn-action btn-horarios"><i class="fa fa-file-alt"></i> Horarios</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td><td>SEGUNDO 2025</td><td>2025</td><td>SEGUNDO</td>
+                    <td class="actions-cell">
+                        <button class="btn-action btn-ingresar"><i class="fa fa-folder-open"></i> Ingresar</button>
+                        <button class="btn-action btn-horarios"><i class="fa fa-file-alt"></i> Horarios</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>5</td><td>INVIERNO 2025</td><td>2025</td><td>INVIERNO</td>
+                    <td class="actions-cell">
+                        <button class="btn-action btn-ingresar"><i class="fa fa-folder-open"></i> Ingresar</button>
+                        <button class="btn-action btn-obtener"><i class="fa fa-cloud-download-alt"></i> Obtener CP</button>
+                        <button class="btn-action btn-horarios"><i class="fa fa-file-alt"></i> Horarios</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>6</td><td>PRIMERO 2025</td><td>2025</td><td>PRIMERO</td>
+                    <td class="actions-cell">
+                        <button class="btn-action btn-ingresar"><i class="fa fa-folder-open"></i> Ingresar</button>
+                        <button class="btn-action btn-horarios"><i class="fa fa-file-alt"></i> Horarios</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>7</td><td>VERANO 2024</td><td>2024</td><td>VERANO</td>
+                    <td class="actions-cell">
+                        <button class="btn-action btn-ingresar"><i class="fa fa-folder-open"></i> Ingresar</button>
+                        <button class="btn-action btn-obtener"><i class="fa fa-cloud-download-alt"></i> Obtener CP</button>
+                        <button class="btn-action btn-horarios"><i class="fa fa-file-alt"></i> Horarios</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>8</td><td>SEGUNDO 2024</td><td>2024</td><td>SEGUNDO</td>
+                    <td class="actions-cell">
+                        <button class="btn-action btn-ingresar"><i class="fa fa-folder-open"></i> Ingresar</button>
+                        <button class="btn-action btn-horarios"><i class="fa fa-file-alt"></i> Horarios</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>9</td><td>INVIERNO 2024</td><td>2024</td><td>INVIERNO</td>
+                    <td class="actions-cell">
+                        <button class="btn-action btn-ingresar"><i class="fa fa-folder-open"></i> Ingresar</button>
+                        <button class="btn-action btn-obtener"><i class="fa fa-cloud-download-alt"></i> Obtener CP</button>
+                        <button class="btn-action btn-horarios"><i class="fa fa-file-alt"></i> Horarios</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function toggleDropdown() {
+        document.getElementById("profileDropdown").classList.toggle("show");
+    }
+    window.onclick = function(e) {
+        if (!e.target.closest('.user-dropdown-container')) {
+            var d = document.getElementById("profileDropdown");
+            if (d) d.classList.remove('show');
+        }
+    }
+</script>
+</body>
+</html>

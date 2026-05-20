@@ -4,6 +4,7 @@
 En la terminal de Debian, ejecuta:
 ```bash
 cd /home/villa/Escritorio/banco
+bash instalar.sh
 source venv/bin/activate
 python app.py
 ```
