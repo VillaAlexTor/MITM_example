@@ -1,6 +1,6 @@
 # ─── CONFIGURA ESTAS IPs ───────────────────────────────
 IP_VICTIMA="192.168.0.11"      # Windows
-IP_SERVIDOR="192.168.0.8"    # Debian (BancoReal)
+IP_SERVIDOR="192.168.0.8"    # Debian (SSA)
 INTERFAZ="eth0"               
 # ───────────────────────────────────────────────────────
 
