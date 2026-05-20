@@ -20,17 +20,19 @@ De este modo, nadie se da cuenta del robo de información.
 
 PASOS:
 
-    1. Primer paso tener lista dos maquinas 
+    1. Preparar las maquinas virtuales:
         • Kali Linux -> Como atacante
         • Windows 10 -> Como victima
         • Debian 13 -> Como servidor
-    2. Configurar adaptador de red como (Bridged (Puente)), y que estén conectados las dos bajo el mismo punto wifi.
-        • Editar configuración de maquina virtual -> Adaptador de red -> y seleccionar Conexión en puente: Conectado directamente a la red física
+    2. Configurar la red:
+        • Configurar adaptador de red como (Bridged (Puente)) para todas las maquinas.
+        • Editar configuración de maquina virtual -> Adaptador de red -> y seleccionar Conexión en puente: Conectado directamente a la red física.
+        • Asegurarse de que todas estén conectadas al mismo punto de red (WiFi o cableada).
     3. Verificar que las VM’s se comunican y que están en la misma red
         • Ifconfig -> 192.168.0.9 (KALI)
         • Ipconfig -> 192.168.0.11 (WINDOWS)
         • Ip a -> 192.168.0.8 (DEBIAN)
-        • Hacer ping entre todas para verificar conexiones
+        • Hacer ping entre las maquinas para comprobar la comunicacion
     4. Instalar entorno virtual dentro de debian y descargar Flask
         • source venv/bin/actívate
         • pip install flask werkzeug
@@ -45,7 +47,7 @@ PASOS:
         • Con la IP de Kali y el puerto 8080
         • Y guardamos 
         • Cuando configuras un proxy en Windows, le estás diciendo al sistema operativo: "no te conectes directamente a internet, manda todo el tráfico a esta dirección primero".
-    7. Instalar el certificado de mit en Windows navegamos a -> http://mitm.it
+    7. Instalar el certificado de mitmproxy en Windows navegamos a -> http://mitm.it
         • Seleccionamos equipo local 
         • No ponemos contraseña 
         • Y ponemos “Colocar todos los certificados en el siguiente almacén”
