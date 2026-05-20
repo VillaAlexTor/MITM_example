@@ -1,10 +1,14 @@
 -----------------------------------------------------------
 Practica 2 – Hacking Etico Ataque MITM (Man-in-the-Middle)
 -----------------------------------------------------------
+Se quiere lograr intervenir la conexion de un servidor con un usuario normal, lo que se conoce como Man-in-the-Middle, asi poder robar credenciales para ingresar al dicho sistema de manera maliciosa. Para esto, tendremos 3 maquinas virtuales
+    - Kali Linux -> Atacante
+    - Windows -> Victima
+    - Debian -> Servidor 
 CONCEPTOS CLAVES:
-•	El ARP Poisoning (o Envenenamiento ARP) es un ciberataque en una red de área local, donde un hacker engaña a los dispositivos. Su objetivo es asociar su propia dirección física (MAC) con la dirección IP de otro equipo (como el servidor), logrando desviar, interceptar o bloquear todo el tráfico de datos. Entonces Kali le dice a debian que la solicitad es parte de la Ip de Windows, y asi también Kali le dice a Windows que es respuesta es de la ip del servidor.
-•	Flask es un micro-framework web de código abierto escrito en Python. Es ligero y minimalista, que nos ayuda a construir una aplicacion web.
-•	Mimtproxy es una herramienta gratuita y de código abierto que actúa como un proxy intermediario. Permite interceptar, inspeccionar conexiones en este caso HTTP en tiempo real.
+• El ARP Poisoning (o Envenenamiento ARP) es un ciberataque en una red de área local, donde un hacker engaña a los dispositivos. Su objetivo es asociar su propia dirección física (MAC) con la dirección IP de otro equipo (como el servidor), logrando desviar, interceptar o bloquear todo el tráfico de datos. Entonces Kali le dice a debian que la solicitad es parte de la Ip de Windows, y asi también Kali le dice a Windows que es respuesta es de la ip del servidor.
+• Flask es un micro-framework web de código abierto escrito en Python. Es ligero y minimalista, que nos ayuda a construir una aplicacion web.
+• Mimtproxy es una herramienta gratuita y de código abierto que actúa como un proxy intermediario. Permite interceptar, inspeccionar conexiones en este caso HTTP en tiempo real.
 1.	Primer paso tener lista dos maquinas 
 •	Kali Linux -> Como atacante
 •	Windows 10 -> Como victima
