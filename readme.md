@@ -28,6 +28,7 @@ Este laboratorio permitirá comprender el funcionamiento de un ataque MITM y las
 
 - **mitmproxy:** Herramienta gratuita y de código abierto que actúa como proxy intermediario. Permite interceptar e inspeccionar conexiones HTTP en tiempo real.
 
+- **arpspoof:** Herramienta utilizada para realizar ataques de envenenamiento ARP (ARP Poisoning). Permite al atacante enviar respuestas ARP falsas en la red, haciendo que el tráfico entre la víctima y el servidor pase a través del equipo atacante. Es fundamental para interceptar y manipular el tráfico en ataques Man-in-the-Middle.
 
 ---
 ### Pasos para realizar el ataque MITM
