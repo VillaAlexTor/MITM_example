@@ -124,7 +124,7 @@ def login():
         print(f"\n{'='*55}")
         print(f"  [SERVIDOR DEBIAN] Intento de login recibido")
         print(f"  Email   : {email}")
-        print(f"  Password: {password}   <-- esto llega al servidor")
+        print(f"  Password: {password}")
         print(f"  IP origen: {request.remote_addr}")
         print(f"  Timestamp: {datetime.datetime.now()}")
         print(f"{'='*55}\n")
