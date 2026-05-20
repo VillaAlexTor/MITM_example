@@ -1,10 +1,11 @@
 -----------------------------------------------------------
 Practica 2 – Hacking Etico Ataque MITM (Man-in-the-Middle)
 -----------------------------------------------------------
-Se quiere lograr intervenir la conexion de un servidor con un usuario normal, lo que se conoce como Man-in-the-Middle, asi poder robar credenciales para ingresar al dicho sistema de manera maliciosa. Para esto, tendremos 3 maquinas virtuales
-    - Kali Linux -> Atacante
-    - Windows -> Victima
-    - Debian -> Servidor 
+El objetivo de esta práctica es interceptar la comunicación entre un servidor y un usuario legítimo mediante un ataque Man-in-the-Middle (MITM), con el fin de capturar credenciales y acceder de forma no autorizada al sistema. Para ello, se utilizarán tres máquinas virtuales:
+    - Kali Linux: Atacante
+    - Windows: Víctima
+    - Debian: Servidor
+Esta práctica permitirá comprender el funcionamiento de un ataque MITM y las medidas necesarias para prevenirlo en entornos reales. En este escenario, el usuario legítimo envía una petición al servidor, pero sin saberlo, dicha petición también es interceptada por el atacante. De igual manera, la respuesta del servidor al cliente es capturada por el atacante, quien puede escuchar y manipular la comunicación entre ambos.
 CONCEPTOS CLAVES:
 • El ARP Poisoning (o Envenenamiento ARP) es un ciberataque en una red de área local, donde un hacker engaña a los dispositivos. Su objetivo es asociar su propia dirección física (MAC) con la dirección IP de otro equipo (como el servidor), logrando desviar, interceptar o bloquear todo el tráfico de datos. Entonces Kali le dice a debian que la solicitad es parte de la Ip de Windows, y asi también Kali le dice a Windows que es respuesta es de la ip del servidor.
 • Flask es un micro-framework web de código abierto escrito en Python. Es ligero y minimalista, que nos ayuda a construir una aplicacion web.
