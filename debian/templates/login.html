@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.S.A. - Sistema de Seguimiento Académico</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #0c354f;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .bg-diamonds { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; }
+        .diamond { position: absolute; background-color: rgba(255,255,255,0.03); transform: rotate(45deg); }
+        .d-1 { width:50vw;height:50vw;top:-10vw;left:-10vw; }
+        .d-2 { width:30vw;height:30vw;bottom:-5vw;left:15vw; }
+        .d-3 { width:40vw;height:40vw;top:-5vw;right:-5vw; }
+        .d-4 { width:25vw;height:25vw;bottom:10vw;right:20vw; }
+        .d-5 { width:100vw;height:100vw;top:-50vw;left:20vw;background-color:transparent;border:2px solid rgba(255,255,255,0.02); }
+        .top-red-bar { width:100%;height:5px;background-color:#d9230f;position:absolute;top:0;left:0;z-index:10; }
+        .login-container {
+            position: relative; z-index: 10;
+            width: 100%; max-width: 500px;
+            margin-top: 10vh;
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            display: flex; flex-direction: column;
+        }
+        .login-header {
+            padding: 15px 25px;
+            background-color: #f7f7f7;
+            border-bottom: 1px solid #ddd;
+            display: flex; align-items: center;
+            border-top-left-radius: 4px; border-top-right-radius: 4px;
+        }
+        .login-header i { font-size: 22px; color: #1b496e; margin-right: 15px; }
+        .login-header h4 { font-size: 14px; color: #333; font-weight: 700; }
+        .login-body { padding: 25px 25px 15px 25px; }
+        .error-alert {
+            background: #fdecea; border: 1px solid #f5c6cb;
+            border-radius: 3px; padding: 10px 14px;
+            font-size: 13px; color: #c0392b; margin-bottom: 14px;
+        }
+        .input-group {
+            display: flex; margin-bottom: 15px;
+            border: 1px solid #ccc; border-radius: 3px;
+            overflow: hidden; background: #fff;
+        }
+        .input-group.captcha-input { margin-bottom: 20px; }
+        .input-group-addon {
+            padding: 10px 15px; background-color: #eee;
+            border-right: 1px solid #ccc; color: #555;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .input-group-addon.right {
+            border-right: none; border-left: 1px solid #ccc;
+            background-color: #f9f9f9; cursor: pointer;
+        }
+        .input-group-addon.empty-left { width:35px;padding:0;background:#e9ecef; }
+        .input-control {
+            flex: 1; padding: 10px 15px;
+            border: none; outline: none;
+            font-size: 14px; color: #555;
+        }
+        .input-control::placeholder { color: #999; }
+        .captcha-container {
+            display: flex; justify-content: center;
+            align-items: stretch; margin-bottom: 15px;
+        }
+        .captcha-box {
+            background-color: #5bc0de; color: #fff;
+            padding: 8px 25px; font-size: 18px;
+            font-family: Arial, sans-serif; letter-spacing: 5px;
+            border-radius: 3px 0 0 3px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .captcha-reload {
+            background-color: #fff; border: 1px solid #ccc;
+            border-left: none; padding: 8px 15px;
+            border-radius: 0 3px 3px 0; color: #333;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+        .btn {
+            display: block; width: 100%; padding: 12px;
+            border: none; border-radius: 3px; color: #fff;
+            font-size: 14px; font-weight: 600; cursor: pointer;
+            text-align: center; margin-bottom: 12px; text-transform: uppercase;
+        }
+        .btn i { margin-left: 5px; }
+        .btn-ingresar { background-color: #337ab7; }
+        .btn-ingresar:hover { background-color: #286090; }
+        .btn-recuperar { background-color: #8cbf26; text-transform: none; }
+        .btn-recuperar:hover { background-color: #7ab01e; }
+        .login-footer {
+            padding: 15px 25px;
+            background-color: #f7f7f7; border-top: 1px solid #eaeaea;
+            border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;
+            display: flex; align-items: center; color: #666; font-size: 13px;
+        }
+        .login-footer .icon-doc { color: #f0ad4e; font-size: 16px; margin-right: 25px; }
+        .login-footer .role-select { display: flex; align-items: center; cursor: pointer; }
+        .login-footer .role-select i { margin-right: 8px; color: #777; }
+        .login-footer .role-select .fa-caret-down { margin-left: 10px; font-size: 12px; }
+        .page-footer {
+            position: absolute; bottom: 20px; left: 0;
+            width: 100%; text-align: center; z-index: 10; padding: 0 40px;
+        }
+        .page-footer p { color: #8fa6b6; font-size: 12px; margin-bottom: 5px; line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <div class="top-red-bar"></div>
+    <div class="bg-diamonds">
+        <div class="diamond d-1"></div><div class="diamond d-2"></div>
+        <div class="diamond d-3"></div><div class="diamond d-4"></div><div class="diamond d-5"></div>
+    </div>
+
+    <div class="login-container">
+        <div class="login-header">
+            <i class="fa fa-university"></i>
+            <h4>CARRERA DE INFORMATICA</h4>
+        </div>
+
+        <div class="login-body">
+            {% if error %}
+            <div class="error-alert"><i class="fa fa-exclamation-circle"></i> {{ error }}</div>
+            {% endif %}
+
+            <form method="POST" action="/login">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <input type="text" class="input-control" name="email" placeholder="Usuario" required autofocus autocomplete="off">
+                    <span class="input-group-addon right"><i class="fa fa-eye"></i></span>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                    <input type="password" class="input-control" id="passInput" name="password" placeholder="Password" required autocomplete="off">
+                    <span class="input-group-addon right" onclick="togglePass()"><i class="fa fa-eye"></i></span>
+                </div>
+
+                <div class="captcha-container">
+                    <div class="captcha-box" id="captcha-display">9 q j A</div>
+                    <button type="button" class="captcha-reload" onclick="refreshCaptcha()"><i class="fa fa-sync-alt"></i></button>
+                </div>
+
+                <div class="input-group captcha-input">
+                    <span class="input-group-addon empty-left"></span>
+                    <input type="text" class="input-control" name="captcha" placeholder="Ingresa el Codigo de Seguridad" autocomplete="off">
+                    <span class="input-group-addon right"><i class="fa fa-edit"></i></span>
+                </div>
+
+                <button type="submit" class="btn btn-ingresar">INGRESAR <i class="fa fa-sign-in-alt"></i></button>
+            </form>
+
+            <button type="button" class="btn btn-recuperar">Recuperar Contraseña <i class="fa fa-sign-in-alt"></i></button>
+        </div>
+
+        <div class="login-footer">
+            <i class="fa fa-file-video icon-doc"></i>
+            <div class="role-select">
+                <i class="fa fa-graduation-cap"></i> Estudiante <i class="fa fa-caret-down"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-footer">
+        <p>Web 2.0 - Sistema de Seguimiento Académico</p>
+        <p>La División de Sistemas de Información y Estadística tiene derechos de propiedad intelectuales relacionados con la tecnología utilizada en el desarrollo del Software S.S.A, por<br>tanto toda copia no autorizada será sancionado bajo las normas de propiedad de la Universidad Mayor de San Andrés UMSA y las leyes establecidas en nuestro país.</p>
+    </div>
+
+    <script>
+        const captchas = ['9 q j A','y 9 6 T','A 3 K 2','P 7 R 5','B 4 M 8','Z 1 W 9'];
+        let ci = 0;
+        function refreshCaptcha() {
+            ci = (ci + 1) % captchas.length;
+            document.getElementById('captcha-display').textContent = captchas[ci];
+        }
+        function togglePass() {
+            const p = document.getElementById('passInput');
+            p.type = p.type === 'password' ? 'text' : 'password';
+        }
+    </script>
+</body>
+</html>
